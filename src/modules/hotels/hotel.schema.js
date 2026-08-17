@@ -166,58 +166,116 @@ export const updateHotelSchema =
   })
   .noUnknown();
 
-  
-export const hotelQuerySchema = yup.object({
-  search: yup
-    .string()
-    .trim()
-    .optional(),
 
-  location: yup
-    .string()
-    .trim()
-    .optional(),
+export const hotelQuerySchema = yup
+  .object({
+    search: yup
+      .string()
+      .trim()
+      .optional(),
 
-  minPrice: yup
-    .number()
-    .min(0, "Minimum price cannot be negative")
-    .optional(),
+    location: yup
+      .string()
+      .trim()
+      .optional(),
 
-  maxPrice: yup
-    .number()
-    .min(0, "Maximum price cannot be negative")
-    .optional(),
+    minPrice: yup
+      .number()
+      .min(
+        0,
+        "Minimum price cannot be negative"
+      )
+      .optional(),
 
-  rating: yup
-    .number()
-    .min(0)
-    .max(5)
-    .optional(),
+    maxPrice: yup
+      .number()
+      .min(
+        0,
+        "Maximum price cannot be negative"
+      )
+      .optional(),
 
-  amenities: yup
-    .string()
-    .optional(),
+    rating: yup
+      .number()
+      .min(0)
+      .max(5)
+      .optional(),
 
-  sort: yup
-    .string()
-    .oneOf([
-      "price_asc",
-      "price_desc",
-      "rating_desc",
-      "newest",
-    ])
-    .default("newest"),
+    amenities: yup
+      .string()
+      .optional(),
 
-  page: yup
-    .number()
-    .integer()
-    .min(1)
-    .default(1),
+    checkIn: yup
+      .date()
+      .typeError(
+        "Invalid check-in date"
+      )
+      .optional(),
 
-  limit: yup
-    .number()
-    .integer()
-    .min(1)
-    .max(100)
-    .default(10),
-});
+    checkOut: yup
+      .date()
+      .typeError(
+        "Invalid check-out date"
+      )
+      .optional(),
+
+    guests: yup
+      .number()
+      .integer()
+      .min(
+        1,
+        "Guests must be at least 1"
+      )
+      .optional(),
+
+    rooms: yup
+      .number()
+      .integer()
+      .min(
+        1,
+        "Rooms must be at least 1"
+      )
+      .optional(),
+
+    sort: yup
+      .string()
+      .oneOf([
+        "price_asc",
+        "price_desc",
+        "rating_desc",
+        "newest",
+      ])
+      .default("newest"),
+
+    page: yup
+      .number()
+      .integer()
+      .min(1)
+      .default(1),
+
+    limit: yup
+      .number()
+      .integer()
+      .min(1)
+      .max(100)
+      .default(10),
+  })
+  .test(
+    "valid-date-range",
+    "Check-out must be after check-in",
+    function (value) {
+      const {
+        checkIn,
+        checkOut,
+      } = value;
+
+      if (!checkIn || !checkOut) {
+        return true;
+      }
+
+      return (
+        new Date(checkOut) >
+        new Date(checkIn)
+      );
+    }
+  );

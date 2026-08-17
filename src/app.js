@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors'
 import { connectDatabase } from "./config/database.js";
 
 import hotelRoutes from "./modules/hotels/hotel.routes.js";
@@ -13,6 +14,9 @@ import errorMiddleware from "./middleware/error.middleware.js";
 const app = express();
 
 app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:5173"
+}))
 
 connectDatabase();
 
