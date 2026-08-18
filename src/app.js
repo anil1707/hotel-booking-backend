@@ -18,12 +18,12 @@ app.use(cors({
   origin: "http://localhost:5173"
 }))
 
-connectDatabase();
+// connectDatabase();
 
 app.get("/api/v1/health", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "Hotel Booking API is running"
+    message: "Server is healthy"
   });
 });
 

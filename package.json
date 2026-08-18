@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/server.js",
     "seed:hotels": "node src/seed/hotel.seed.js",
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],
   "author": "",
