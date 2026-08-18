@@ -13,5 +13,6 @@ describe("GET /api/v1/health", () => {
       success: true,
       message: "Server is healthy"
     });
+    
   });
 });
