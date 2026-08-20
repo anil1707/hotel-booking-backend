@@ -256,6 +256,7 @@ const cancelBooking = async (
       bookingId
     );
 
+  // 1. Booking not found
   if (!booking) {
     const error = new Error(
       "Booking not found"
@@ -266,6 +267,7 @@ const cancelBooking = async (
     throw error;
   }
 
+  // 2. Check ownership
   const isOwner =
     booking.userId.toString() ===
     user.id;
@@ -283,6 +285,7 @@ const cancelBooking = async (
     throw error;
   }
 
+  // 3. Already cancelled
   if (
     booking.status ===
     "cancelled"
@@ -296,6 +299,7 @@ const cancelBooking = async (
     throw error;
   }
 
+  // 4. Completed booking
   if (
     booking.status ===
     "completed"
@@ -309,6 +313,22 @@ const cancelBooking = async (
     throw error;
   }
 
+  // 5. Check-in date has passed
+  const now = new Date();
+
+  if (
+    new Date(booking.checkIn) <= now
+  ) {
+    const error = new Error(
+      "Booking cannot be cancelled after check-in date"
+    );
+
+    error.statusCode = 400;
+
+    throw error;
+  }
+
+  // 6. Cancel booking
   booking.status = "cancelled";
 
   await booking.save();

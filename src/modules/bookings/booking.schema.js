@@ -128,3 +128,48 @@ export const createBookingSchema =
       .max(100)
       .default(10),
   });
+
+export const checkAvailabilitySchema = yup.object({
+  hotelId: yup
+    .string()
+    .required("Hotel is required"),
+
+  roomId: yup
+    .string()
+    .required("Room is required"),
+
+  checkIn: yup
+    .date()
+    .typeError("Invalid check-in date")
+    .required("Check-in date is required"),
+
+  checkOut: yup
+    .date()
+    .typeError("Invalid check-out date")
+    .required("Check-out date is required")
+    .test(
+      "after-checkin",
+      "Check-out must be after check-in",
+      function (value) {
+        const { checkIn } = this.parent;
+
+        if (!checkIn || !value) {
+          return true;
+        }
+
+        return value > checkIn;
+      }
+    ),
+
+  guests: yup
+    .number()
+    .integer()
+    .min(1, "At least 1 guest is required")
+    .required("Guests are required"),
+
+  rooms: yup
+    .number()
+    .integer()
+    .min(1, "At least 1 room is required")
+    .required("Rooms are required"),
+});

@@ -1,6 +1,6 @@
 import express from "express";
 
-import bookingController from "./booking.controller.js";
+import bookingController, { checkAvailability } from "./booking.controller.js";
 
 import authenticate from "../../middleware/auth.middleware.js";
 import authorize from "../../middleware/authorize.middleware.js";
@@ -66,6 +66,11 @@ router.get(
     "query"
   ),
   bookingController.getOwnerBookings
+);
+
+router.post(
+  "/check-availability",
+  checkAvailability
 );
 
 export default router;

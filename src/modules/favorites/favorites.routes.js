@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 router.post(
-  "/users/me/favorites/:hotelId",
+  "/favorites/:hotelId",
   authenticate,
   validate(
     hotelIdSchema,
@@ -22,13 +22,13 @@ router.post(
 );
 
 router.get(
-  "/users/me/favorites",
+  "/favorites",
   authenticate,
   favoriteController.getFavorites
 );
 
 router.delete(
-  "/users/me/favorites/:hotelId",
+  "/favorites/:hotelId",
   authenticate,
   validate(
     hotelIdSchema,
