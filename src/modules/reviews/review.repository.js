@@ -1,4 +1,5 @@
 import Review from "./review.model.js";
+import Booking from "../bookings/booking.model.js"
 
 const create = async (data) => {
   return Review.create(data);

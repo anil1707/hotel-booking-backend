@@ -135,12 +135,26 @@ const findByHotelIds = async ({
   };
 };
 
+const findCompletedBookingForReview = async ({
+  bookingId,
+  userId,
+  hotelId,
+}) => {
+  return Booking.findOne({
+    _id: bookingId,
+    userId,
+    hotelId,
+    status: "completed",
+  });
+};
+
 export default {
   create,
   findOverlappingBookings,
   findById,
   findByUserId,
   updateStatus,
-  findByHotelIds
+  findByHotelIds,
+  findCompletedBookingForReview
 };
 
