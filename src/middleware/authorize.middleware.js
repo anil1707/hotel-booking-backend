@@ -2,8 +2,9 @@ const authorize = (...allowedRoles) => {
   return (req, res, next) => {
     if (
       !req.user ||
-      !allowedRoles.includes(
-        req.user.role
+      !req.user.roles ||
+      !req.user.roles.some((role) =>
+        allowedRoles.includes(role)
       )
     ) {
       return res.status(403).json({

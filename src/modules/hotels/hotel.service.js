@@ -1,10 +1,10 @@
 import hotelRepository from "./hotel.repository.js";
 
-const createHotel = async (data) => {
-  const hotel = await hotelRepository.create(data);
+// const createHotel = async (data) => {
+//   const hotel = await hotelRepository.create(data);
 
-  return hotel;
-};
+//   return hotel;
+// };
 
 const getHotelById = async (id) => {
   const hotel = await hotelRepository.findById(id);
@@ -127,10 +127,39 @@ const deleteHotel = async (
   await hotelRepository.deleteById(id);
 };
 
+const createOwnerHotel = async (
+  data,
+  user
+) => {
+  return hotelRepository.create({
+    ownerId: user.id,
+
+    name: data.name,
+    description: data.description,
+
+    location: data.location,
+
+    images: data.images ?? [],
+
+    amenities: data.amenities ?? [],
+
+    // New hotels need admin approval
+    status: "pending",
+  });
+};
+
+const getOwnerHotels = async (user) => {
+  return hotelRepository.findByOwnerId(
+    user.id
+  );
+};
+
 export default {
-  createHotel,
+  // createHotel,
   getHotelById,
   getHotels,
   updateHotel,
   deleteHotel,
+  createOwnerHotel,
+  getOwnerHotels
 };

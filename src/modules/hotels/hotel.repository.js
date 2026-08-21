@@ -147,7 +147,9 @@ const deleteById = async (id) => {
 const findByOwnerId = async (ownerId) => {
   return Hotel.find({
     ownerId,
-  }).select("_id");
+  }).sort({
+    createdAt: -1,
+  });
 };
 
 export default {
@@ -156,5 +158,6 @@ export default {
   findAll,
   updateById,
   deleteById,
-  findByOwnerId
+  findByOwnerId,
+  findByOwnerId,
 };

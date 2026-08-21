@@ -16,7 +16,7 @@ router.post(
   validate(createHotelSchema),
   authenticate,
   authorize("hotel_owner", "admin"),
-  hotelController.createHotel
+  hotelController.createOwnerHotel
 );
 
 router.get(
@@ -62,5 +62,14 @@ router.delete(
   ),
   hotelController.deleteHotel
 );
+
+
+router.get(
+  "/owner/hotels",
+  authenticate,
+  authorize("hotel_owner", "admin"),
+  hotelController.getOwnerHotels
+);
+
 
 export default router;

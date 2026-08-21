@@ -279,3 +279,127 @@ export const hotelQuerySchema = yup
       );
     }
   );
+
+const objectIdRegex =
+  /^[0-9a-fA-F]{24}$/;
+
+export const createOwnerHotelSchema =
+  yup.object({
+    name: yup
+      .string()
+      .trim()
+      .min(3)
+      .max(100)
+      .required("Hotel name is required"),
+
+    description: yup
+      .string()
+      .trim()
+      .min(10)
+      .max(2000)
+      .required("Hotel description is required"),
+
+    location: yup
+      .object({
+        address: yup
+          .string()
+          .trim()
+          .required("Address is required"),
+
+        city: yup
+          .string()
+          .trim()
+          .required("City is required"),
+
+        state: yup
+          .string()
+          .trim()
+          .required("State is required"),
+
+        country: yup
+          .string()
+          .trim()
+          .required("Country is required"),
+
+        latitude: yup
+          .number()
+          .optional(),
+
+        longitude: yup
+          .number()
+          .optional(),
+      })
+      .required("Location is required"),
+
+    images: yup
+      .array()
+      .of(yup.string().url())
+      .optional(),
+
+    amenities: yup
+      .array()
+      .of(
+        yup.string().trim()
+      )
+      .optional(),
+  });
+
+
+  export const updateOwnerHotelSchema =
+  yup.object({
+    name: yup
+      .string()
+      .trim()
+      .min(3)
+      .max(100)
+      .optional(),
+
+    description: yup
+      .string()
+      .trim()
+      .min(10)
+      .max(2000)
+      .optional(),
+
+    location: yup
+      .object({
+        address: yup
+          .string()
+          .trim()
+          .optional(),
+
+        city: yup
+          .string()
+          .trim()
+          .optional(),
+
+        state: yup
+          .string()
+          .trim()
+          .optional(),
+
+        country: yup
+          .string()
+          .trim()
+          .optional(),
+
+        latitude: yup
+          .number()
+          .optional(),
+
+        longitude: yup
+          .number()
+          .optional(),
+      })
+      .optional(),
+
+    images: yup
+      .array()
+      .of(yup.string().url())
+      .optional(),
+
+    amenities: yup
+      .array()
+      .of(yup.string().trim())
+      .optional(),
+  });

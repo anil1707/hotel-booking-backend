@@ -22,14 +22,14 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
 
-    role: {
-      type: String,
+    roles: {
+      type: [String],
       enum: [
         "customer",
         "hotel_owner",
         "admin",
       ],
-      default: "customer",
+      default: ["customer"],
     },
 
     phone: {

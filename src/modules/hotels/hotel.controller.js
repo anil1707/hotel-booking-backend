@@ -98,10 +98,55 @@ const deleteHotel = async (
   }
 };
 
+const createOwnerHotel = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const hotel =
+      await hotelService.createOwnerHotel(
+        req.body,
+        req.user
+      );
+
+    return res.status(201).json({
+      success: true,
+      message:
+        "Hotel created successfully",
+      data: hotel,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getOwnerHotels = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const hotels =
+      await hotelService.getOwnerHotels(
+        req.user
+      );
+
+    return res.status(200).json({
+      success: true,
+      data: hotels,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   createHotel,
   getHotelById,
   getHotels,
   updateHotel,
   deleteHotel,
+  createOwnerHotel,
+  getOwnerHotels
 };
